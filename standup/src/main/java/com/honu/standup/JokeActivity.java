@@ -1,29 +1,42 @@
-package com.udacity.gradle.builditbigger;
+package com.honu.standup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
 
-import com.honu.haha.Joker;
-import com.honu.standup.JokeActivity;
+public class JokeActivity extends AppCompatActivity {
 
-
-public class MainActivity extends ActionBarActivity {
+    public static final String EXTRA_JOKE_TEXT = "com.honu.standup.JOKE_TEXT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_joke);
+
+        String joke = null;
+        Intent intent = getIntent();
+        if (intent != null) {
+             joke = intent.getStringExtra(EXTRA_JOKE_TEXT);
+        }
+
+        if (TextUtils.isEmpty(joke)) {
+            joke = "Sorry, I'm not feeling funny today (something must be wrong)";
+        }
+
+        TextView jokeTextView = (TextView) findViewById(R.id.joke);
+        jokeTextView.setText(joke);
     }
+
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_joke, menu);
         return true;
     }
 
@@ -41,14 +54,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void tellJoke(View view){
-        String joke = Joker.tellPun();
-        Intent jokeIntent = new Intent(this, com.honu.standup.JokeActivity.class);
-        jokeIntent.putExtra(JokeActivity.EXTRA_JOKE_TEXT, joke);
-        startActivity(jokeIntent);
-        //Toast.makeText(this, Joker.tellPun(), Toast.LENGTH_LONG).show();
-    }
-
-
 }
