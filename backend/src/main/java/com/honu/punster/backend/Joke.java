@@ -5,13 +5,20 @@ package com.honu.punster.backend;
  */
 public class Joke {
 
-    private String myData;
+    private String data;
 
-    public String getData() {
-        return myData;
+    public Joke() {
     }
 
-    public void setData(String data) {
-        myData = data;
+    public Joke(String joke) {
+        data = joke;
+    }
+
+    public String getJoke() {
+        return data;
+    }
+
+    public void setJoke(String data) {
+        this.data = data;
     }
 }
