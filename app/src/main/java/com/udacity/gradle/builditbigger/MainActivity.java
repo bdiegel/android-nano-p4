@@ -1,34 +1,30 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import com.honu.punster.backend.jokeApi.JokeApi;
 import com.honu.standup.JokeActivity;
 
-import java.io.IOException;
 
-
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements JokeFetcher.JokeListener {
 
     static final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    ProgressBar mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mProgress = (ProgressBar) findViewById(R.id.fetchJokeProgress);
     }
 
     @Override
@@ -53,9 +49,11 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view){
-        JokeAsyncTask asyncTask = new JokeAsyncTask();
-        asyncTask.execute();
+    // Button onClick
+    public void tellJoke(View view) {
+        mProgress.setVisibility(ProgressBar.VISIBLE);
+        JokeFetcher jokeFetcher = new JokeFetcher(JokeFetcher.GENYMOTION_LOCALHOST, this);
+        jokeFetcher.fetchJoke();
     }
 
     private void showJokeActivity(String joke) {
@@ -65,50 +63,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    class JokeAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
-
-        private JokeApi myApiService = null;
-
-        // localhost's IP address in Android emulator
-        //String rootUrl = "http://10.0.2.2:8080/_ah/api/";
-
-        // localhost's IP address in Genymotion emulator
-        String rootUrl = "http://10.0.3.2:8080/_ah/api/";
-
-        private Context context;
-
-        @Override
-        protected String doInBackground(Pair<Context, String>... params) {
-
-            // create the API service (do once)
-            if (myApiService == null) {
-                JokeApi.Builder builder = new JokeApi.Builder(AndroidHttp.newCompatibleTransport(),
-                      new AndroidJsonFactory(), null)
-                      // local devappserver options:
-                      .setRootUrl(rootUrl)
-                      .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                          @Override
-                          public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                              // turn off compression
-                              abstractGoogleClientRequest.setDisableGZipContent(true);
-                          }
-                      });
-                      // end: local devappserver options
-                myApiService = builder.build();
-            }
-
-            try {
-                return myApiService.getPun().execute().getJoke();
-            } catch (IOException e) {
-                return e.getMessage();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.d(LOG_TAG, "Pun: " + result);
-            showJokeActivity(result);
-        }
+    @Override
+    public void onSuccess(String joke) {
+        mProgress.setVisibility(ProgressBar.GONE);
+        showJokeActivity(joke);
     }
 
+    @Override
+    public void onError(Throwable throwable) {
+        mProgress.setVisibility(ProgressBar.GONE);
+        Toast.makeText(this, R.string.fetch_joke_failed, Toast.LENGTH_LONG).show();
+        Log.e(LOG_TAG, getString(R.string.fetch_joke_failed), throwable);
+    }
 }

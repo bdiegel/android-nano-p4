@@ -12,16 +12,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/instructions_text_view"
+        android:layout_centerHorizontal="true"
         />
 
     <Button
+        android:id="@+id/tellJokeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/instructions_text_view"
+        android:layout_centerHorizontal="true"
         android:text="@string/button_text"
         android:onClick="tellJoke"
-
         />
+
+    <ProgressBar
+        android:id="@+id/fetchJokeProgress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+    </ProgressBar>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
