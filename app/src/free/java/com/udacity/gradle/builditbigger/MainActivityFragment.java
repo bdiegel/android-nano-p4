@@ -64,6 +64,7 @@ public class MainActivityFragment extends BaseMainActivityFragement {
             startActivity(jokeIntent);
             requestInterstitialAd();
         }
+        mJokeButton.setEnabled(true);
     }
 
     private void requestInterstitialAd() {

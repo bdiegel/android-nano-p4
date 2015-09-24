@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -20,10 +21,7 @@ public class JokeFetcher {
 
     static final String LOG_TAG = JokeFetcher.class.getSimpleName();
 
-    public static final String GENYMOTION_LOCALHOST = "http://10.0.3.2:8080/_ah/api/";
-    public static final String ANDROID_LOCALHOST = "http://10.0.2.2:8080/_ah/api/";
-
-    String mRootUrl = GENYMOTION_LOCALHOST;
+    String mRootUrl;
 
     JokeListener mJokeListener;
 
@@ -32,7 +30,7 @@ public class JokeFetcher {
         void onError(Throwable throwable);
     }
 
-    public JokeFetcher(String rootUrl, JokeListener jokeListener) {
+    public JokeFetcher(@NonNull String rootUrl, JokeListener jokeListener) {
         this.mRootUrl = rootUrl;
         this.mJokeListener = jokeListener;
     }

@@ -20,6 +20,8 @@ public abstract class BaseMainActivityFragement extends Fragment implements Joke
 
     static final String LOG_TAG = BaseMainActivityFragement.class.getSimpleName();
 
+    Button mJokeButton;
+
     ProgressBar mProgress;
 
     String mJoke;
@@ -33,10 +35,11 @@ public abstract class BaseMainActivityFragement extends Fragment implements Joke
 
         mProgress = (ProgressBar) root.findViewById(R.id.fetchJokeProgress);
 
-        Button button = (Button) root.findViewById(R.id.tellJokeButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        mJokeButton = (Button) root.findViewById(R.id.tellJokeButton);
+        mJokeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mJokeButton.setEnabled(false);
                 tellJoke(view);
             }
         });
@@ -46,7 +49,7 @@ public abstract class BaseMainActivityFragement extends Fragment implements Joke
 
     public void tellJoke(View view) {
         mProgress.setVisibility(ProgressBar.VISIBLE);
-        JokeFetcher jokeFetcher = new JokeFetcher(JokeFetcher.GENYMOTION_LOCALHOST, this);
+        JokeFetcher jokeFetcher = new JokeFetcher(getString(R.string.emulator_localhost), this);
         jokeFetcher.fetchJoke();
     }
 
@@ -54,6 +57,7 @@ public abstract class BaseMainActivityFragement extends Fragment implements Joke
         Intent jokeIntent = new Intent(getActivity(), com.honu.standup.JokeActivity.class);
         jokeIntent.putExtra(JokeActivity.EXTRA_JOKE_TEXT, mJoke);
         startActivity(jokeIntent);
+        mJokeButton.setEnabled(true);
     }
 
     @Override

@@ -4,4 +4,10 @@
     <string name="button_text">Tell Joke</string>
     <string name="action_settings">Settings</string>
     <string name="fetch_joke_failed">Failed to fetch joke from server</string>
+
+    <!-- configure me to the developer server root URL for GCE endpoints -->
+    <string name="emulator_localhost">http://10.0.3.2:8080/_ah/api/</string>
+
+    <!--<string name="genymotion_localhost">http://10.0.3.2:8080/_ah/api/</string>-->
+    <!--<string name="android_localhost">http://10.0.2.2:8080/_ah/api/</string>-->
 </resources>
