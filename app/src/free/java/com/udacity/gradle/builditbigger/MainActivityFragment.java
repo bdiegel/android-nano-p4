@@ -16,7 +16,7 @@ import com.honu.standup.JokeActivity;
 /**
  * Main fragment for 'free' app shows a banner ad at footer of activity and interstitial ad before each joke
  */
-public class MainActivityFragment extends BaseMainActivityFragement {
+public class MainActivityFragment extends BaseMainActivityFragment {
 
     InterstitialAd mInterstitialAd;
 

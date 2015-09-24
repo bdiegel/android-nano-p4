@@ -16,9 +16,9 @@ import com.honu.standup.JokeActivity;
 /**
  * Base fragment functionality shared by all product flavors
  */
-public abstract class BaseMainActivityFragement extends Fragment implements JokeFetcher.JokeListener {
+public abstract class BaseMainActivityFragment extends Fragment implements JokeFetcher.JokeListener {
 
-    static final String LOG_TAG = BaseMainActivityFragement.class.getSimpleName();
+    static final String LOG_TAG = BaseMainActivityFragment.class.getSimpleName();
 
     Button mJokeButton;
 
@@ -26,7 +26,7 @@ public abstract class BaseMainActivityFragement extends Fragment implements Joke
 
     String mJoke;
 
-    public BaseMainActivityFragement() {
+    public BaseMainActivityFragment() {
     }
 
     @Override
