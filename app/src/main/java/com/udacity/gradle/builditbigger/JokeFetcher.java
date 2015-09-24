@@ -80,6 +80,7 @@ public class JokeFetcher {
         @Override
         protected void onPostExecute(String result) {
             if (throwable != null) {
+                Log.d(LOG_TAG, "API error: " + throwable.getMessage());
                 mJokeListener.onError(throwable);
             } else {
                 Log.d(LOG_TAG, "Got pun: " + result);
