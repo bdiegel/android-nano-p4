@@ -13,18 +13,18 @@ import android.widget.Toast;
 import com.honu.standup.JokeActivity;
 
 
-public class MainActivity extends ActionBarActivity implements JokeFetcher.JokeListener {
+public class MainActivity extends ActionBarActivity { //implements JokeFetcher.JokeListener {
 
     static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    ProgressBar mProgress;
+    //ProgressBar mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mProgress = (ProgressBar) findViewById(R.id.fetchJokeProgress);
+        //mProgress = (ProgressBar) findViewById(R.id.fetchJokeProgress);
     }
 
     @Override
@@ -49,30 +49,30 @@ public class MainActivity extends ActionBarActivity implements JokeFetcher.JokeL
         return super.onOptionsItemSelected(item);
     }
 
-    // Button onClick
-    public void tellJoke(View view) {
-        mProgress.setVisibility(ProgressBar.VISIBLE);
-        JokeFetcher jokeFetcher = new JokeFetcher(JokeFetcher.GENYMOTION_LOCALHOST, this);
-        jokeFetcher.fetchJoke();
-    }
+//    // Button onClick
+//    public void tellJoke(View view) {
+//        mProgress.setVisibility(ProgressBar.VISIBLE);
+//        JokeFetcher jokeFetcher = new JokeFetcher(JokeFetcher.GENYMOTION_LOCALHOST, this);
+//        jokeFetcher.fetchJoke();
+//    }
 
-    private void showJokeActivity(String joke) {
-        Intent jokeIntent = new Intent(this, com.honu.standup.JokeActivity.class);
-        jokeIntent.putExtra(JokeActivity.EXTRA_JOKE_TEXT, joke);
-        startActivity(jokeIntent);
-    }
+//    private void showJokeActivity(String joke) {
+//        Intent jokeIntent = new Intent(this, com.honu.standup.JokeActivity.class);
+//        jokeIntent.putExtra(JokeActivity.EXTRA_JOKE_TEXT, joke);
+//        startActivity(jokeIntent);
+//    }
 
 
-    @Override
-    public void onSuccess(String joke) {
-        mProgress.setVisibility(ProgressBar.GONE);
-        showJokeActivity(joke);
-    }
-
-    @Override
-    public void onError(Throwable throwable) {
-        mProgress.setVisibility(ProgressBar.GONE);
-        Toast.makeText(this, R.string.fetch_joke_failed, Toast.LENGTH_LONG).show();
-        Log.e(LOG_TAG, getString(R.string.fetch_joke_failed), throwable);
-    }
+//    @Override
+//    public void onSuccess(String joke) {
+//        mProgress.setVisibility(ProgressBar.GONE);
+//        showJokeActivity(joke);
+//    }
+//
+//    @Override
+//    public void onError(Throwable throwable) {
+//        mProgress.setVisibility(ProgressBar.GONE);
+//        Toast.makeText(this, R.string.fetch_joke_failed, Toast.LENGTH_LONG).show();
+//        Log.e(LOG_TAG, getString(R.string.fetch_joke_failed), throwable);
+//    }
 }
